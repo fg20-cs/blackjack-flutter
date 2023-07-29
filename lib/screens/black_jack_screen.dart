@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "dart:math";
+import 'package:black_jack/styles/styles.dart';
 
 class BlackJackScreen extends StatefulWidget {
   const BlackJackScreen({Key? key}) : super(key: key);
@@ -155,6 +156,14 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
   // Add extra card to player (hit)
   void addCard() {
 
+    Random random = Random();
+    String cardKey = playingCards.keys.elementAt(random.nextInt(playingCards.keys.length));
+    playingCards.removeWhere((key, value) => key == cardKey);
+    myCards.add(Image.asset(cardKey));
+    playerScore = playerScore + deckOfCards[cardKey]!;
+
+    setState(() {});
+
   }
 
 
@@ -169,7 +178,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
 
                   Column(
                     children: [
-                      Text("Dealer's score: $dealerScore"),
+                      Text("Dealer's score: $dealerScore", style: countStyle),
                       Container(
                         height: 300,
                         child: GridView.builder(
@@ -184,7 +193,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
 
                   Column(
                     children: [
-                      Text("Player's score: $playerScore"),
+                      Text("Player's score: $playerScore", style: countStyle),
                       Container(
                         height: 300,
                         child: GridView.builder(
@@ -205,7 +214,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                             addCard();
                           },
                           color: const Color(0XFFEC625F),
-                          child: const Text("Another card"),
+                          child: Text("Another card", style: buttonStyle),
 
                       ),
                       MaterialButton(
@@ -213,7 +222,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                             startNewRound();
                           },
                           color: const Color(0XFFEC625F),
-                          child: const Text("Next Round"),
+                          child: Text("Next Round", style: buttonStyle),
                       )
                     ],
                   )
@@ -233,7 +242,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                   startNewRound();
                 });
               },
-              child: const Text("Start Game"),
+              child: Text("Start Game", style: buttonStyle),
             )),
     );
   }
